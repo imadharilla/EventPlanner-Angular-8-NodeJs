@@ -1,0 +1,28 @@
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Email</th>
+    <th scope="col">Occupation</th>
+    <th scope="col">EDIT</th>
+    <th scope="col">Delete</th>
+    <th scope="col">Details</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let attendee of attendeeList; index as i">
+    <td>
+      {{ attendee.nom }}
+    </td>
+    <td>{{ attendee.email  }}</td>
+    <td>{{ attendee.occupation }}</td>
+    <td> <button class="btn"><i class="fa fa-home" > <img src="assets/images/Male-user-edit-icon.png" style="height: 35px;"> </i></button>  </td>
+    <td> <button class="btn"><i class="fa fa-home" > <img src="assets/images/Male-user-remove-icon.png" style="height: 35px;"> </i></button>  </td>
+    <td> <button class="btn"><i class="fa fa-home" > <img src="assets/images/Male-user-search-icon.png" style="height: 35px;"> </i></button>  </td>
+  </tr>
+  </tbody>
+</table>
+<div style="text-align: center;">
+  <button class="btn"><span class="fa fa-home"><img src="assets/images/add-icon.png" style="height: 80px;">  </span></button>
+</div>
