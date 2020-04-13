@@ -1,0 +1,27 @@
+.jumbotron.create-event {
+    background-size: cover;
+    background-position: center;
+}
+
+#start {
+    min-height: 42px;
+}
+
+#end {
+    min-height: 42px;
+}
+
+.guest-tag {
+    font-weight: 400;
+    font-size: 15px;
+    letter-spacing: 0.05rem;
+    background: #efefef;
+    color: #222;
+    cursor: pointer;
+    border-radius: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0.1rem 0.2rem;
+    line-height: 32px;
+    display: inline-block;
+}

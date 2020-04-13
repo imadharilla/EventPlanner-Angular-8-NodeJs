@@ -19,6 +19,7 @@ import { ErrorComponent } from './error/error.component';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { AttendeeListComponent } from './attendee/attendee-list/attendee-list.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AttendeeService } from './attendee/attendee.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [
     EventsService,
+    AttendeeService,
      {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
      {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     ],

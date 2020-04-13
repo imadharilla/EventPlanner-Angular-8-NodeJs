@@ -1,4 +1,6 @@
 
+<!-- List of attendees -->
+
 <table class="table table-striped">
   <thead>
   <tr>
@@ -13,16 +15,56 @@
   <tbody>
   <tr *ngFor="let attendee of attendeeList; index as i">
     <td>
-      {{ attendee.nom }}
+      {{ attendee.nom }} {{attendee.prenom}}
     </td>
     <td>{{ attendee.email  }}</td>
     <td>{{ attendee.occupation }}</td>
-    <td> <button class="btn"><i class="fa fa-home" > <img src="assets/images/Male-user-edit-icon.png" style="height: 35px;"> </i></button>  </td>
-    <td> <button class="btn"><i class="fa fa-home" > <img src="assets/images/Male-user-remove-icon.png" style="height: 35px;"> </i></button>  </td>
-    <td> <button class="btn"><i class="fa fa-home" > <img src="assets/images/Male-user-search-icon.png" style="height: 35px;"> </i></button>  </td>
+    <td> <button class="btn"><i class="fa fa-home" > <img class="icon" src="assets/images/Male-user-edit-icon.png" > </i></button>  </td>
+    <td> <button class="btn" (click)="onDelete(attendee.id)" ><i class="fa fa-home" > <img class="icon" src="assets/images/Male-user-remove-icon.png" > </i></button>  </td>
+    <td> <button class="btn"><i class="fa fa-home" > <img class="icon" src="assets/images/Male-user-search-icon.png"> </i></button>  </td>
   </tr>
   </tbody>
 </table>
 <div style="text-align: center;">
-  <button class="btn"><span class="fa fa-home"><img src="assets/images/add-icon.png" style="height: 80px;">  </span></button>
+  <button class="btn" (click)="open(content)"><span class="fa fa-home"><img src="assets/images/add-icon.png" style="height: 80px;">  </span></button>
 </div>
+
+
+<!-- Create attendee -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create attendee</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form [formGroup]='formAttendee' (submit)='onSave()' >
+  <div class="modal-body">
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" formControlName="email" name="email"  >
+        <mat-error *ngIf="formAttendee.get('email').invalid">Please enter a valid Email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Nom</mat-label>
+        <input matInput type="text" formControlName="nom"   >
+      </mat-form-field>
+
+      <mat-form-field>
+      <mat-label>Prenom</mat-label>
+        <input matInput type="text" formControlName="prenom"   >
+      </mat-form-field>
+
+      <mat-form-field>
+      <mat-label>Occupation</mat-label>
+        <input matInput type="text" formControlName="occupation"  >
+      </mat-form-field>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-outline-dark" >Save</button>
+  </div>
+</form>
+</ng-template>

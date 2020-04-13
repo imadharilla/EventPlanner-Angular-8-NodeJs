@@ -6,3 +6,4 @@ de reconnaissance faciale. Celui-ci sera utilisé pour scanner le visage
 des intervenants et permettre leur identification.
 
 
+Done!

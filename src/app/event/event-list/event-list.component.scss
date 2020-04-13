@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  margin-top: 17px;
+}
+
+
+.event-image {
+  width: 100%;
+
+}
+
+.event-image img {
+
+  box-shadow: 1px 1px 5px blue;
+  height: 300px;
+  width: 300px;
+
+}
+
+mat-paginator {
+  margin-top: 16px;
+}
+
+mat-spinner{
+  margin: auto;
+}

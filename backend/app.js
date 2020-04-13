@@ -7,9 +7,10 @@ const mongoose = require("mongoose");
 
 const eventsRoutes = require('./routes/events');
 const userRoutes = require('./routes/users');
+const attendeeRoutes = require('./routes/attendee');
 const app = express();
 
-
+/*
 mongoose.connect('mongodb://localhost/eventsdb',{ useNewUrlParser: true , useUnifiedTopology: true  }  )
 .then(() => {
   console.log('Connected to database !');
@@ -17,6 +18,16 @@ mongoose.connect('mongodb://localhost/eventsdb',{ useNewUrlParser: true , useUni
 .catch(() => {
   console.log('Connection failed!');
 });
+*/
+
+mongoose.connect('mongodb+srv://Mata:4RruaXfcdPVZMDX@cluster0-vzdpf.mongodb.net/test?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true  }  )
+.then(() => {
+  console.log('Connected to database !');
+})
+.catch(() => {
+  console.log('Connection failed!');
+});
+
 
 app.use(bodyParser.json());
 app.use("/images", express.static(path.join("backend/images")));
@@ -34,5 +45,7 @@ app.use((req, res, next) => {
 app.use("/api/events", eventsRoutes);
 
 app.use("/api/user", userRoutes);
+
+app.use("/api/attendee", attendeeRoutes);
 
 module.exports = app;

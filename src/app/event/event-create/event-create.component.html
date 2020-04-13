@@ -1,0 +1,64 @@
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card *ngIf="!isLoading">
+
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="form">
+<form class="example-form" [formGroup]='form'  >
+      <ng-template matStepLabel>Fill out event details</ng-template>
+  <mat-form-field class="example-full-width">
+    <mat-label>Event Title</mat-label>
+    <input matInput type="text" formControlName="title" name="title"  >
+    <mat-error *ngIf="form.get('title').invalid">Please enter a valid title</mat-error>
+  </mat-form-field>
+  <div>
+    <button mat-strocked-button type="button" (click)="filePicker.click()">Pick Image</button>
+    <input  type="file" #filePicker (change)="onImagePicked($event)">
+  </div>
+  <div class="image-preview" *ngIf="imagePreview !=='' && imagePreview">
+    <img [src]="imagePreview" [alt] = "form.value.title">
+  </div>
+  <mat-form-field class="example-full-width">
+    <mat-label>Event Description</mat-label>
+    <textarea matInput #inputDescription name="description"  formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+  <mat-label>Start Date</mat-label>
+  <input matInput [matDatepicker]="picker1" formControlName="startDate"  >
+  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+  <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>End Date</mat-label>
+  <input matInput [matDatepicker]="picker2" formControlName="endDate"  >
+  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+  <mat-datepicker #picker2></mat-datepicker>
+</mat-form-field>
+<mat-form-field class="example-full-width">
+  <mat-label>Location</mat-label>
+  <input matInput  formControlName="location"  >
+</mat-form-field>
+<button mat-button matStepperNext color="primary" type="button">Next</button>
+</form>
+
+</mat-step>
+<!-- Attendee Form -->
+<mat-step [stepControl]="form2">
+
+  <form class="example-form" [formGroup]='form2' (submit)="onSaveEvent()" >
+  <ng-template matStepLabel > Add participants </ng-template>
+  <mat-selection-list #shoes>
+    <mat-list-option *ngFor="let attendee of attendeeList">
+      {{attendee.nom}} {{attendee.prenom}} ( {{attendee.email}} )
+    </mat-list-option>
+  </mat-selection-list>
+  <button mat-button matStepperPrevious color="primary" type="button">Back</button>
+  <button mat-raised-button color="accent" type="submit">Save Event</button>
+
+  </form>
+</mat-step>
+</mat-horizontal-stepper>
+</mat-card>
+

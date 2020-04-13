@@ -1,0 +1,76 @@
+<div class="jumbotron create-event">
+  <div class="container">
+    <!--<h1>Start a fake event</h1>-->
+  </div>
+</div>
+<div class="container">
+  <div class="card" style="margin-top: -60px; margin-left: auto; margin-right: auto; max-width: 600px;">
+    <form autocomplete="on" [formGroup]="createEventForm" novalidate>
+      <div class="card-block">
+        <h4 class="card-title">Create an event</h4>
+        <div>
+          <div class="form-group" [class.has-warning]="!name.valid && name.touched" [class.has-success]="name.valid && name.touched">
+            <label class="col-form-label" for="name">Event name</label>
+            <input [formControl]="createEventForm.controls['name']" [class.form-control-warning]="!name.valid && name.touched" [class.form-control-success]="name.valid" type="name" class="form-control" name="name" id="name" required myAutofocus>
+            <div [hidden]="name.valid || !name.touched"  class="form-control-feedback">An event name is required.</div>
+          </div>
+          <div class="form-group" [class.has-warning]="!eventType.valid && eventType.touched" [class.has-success]="eventType.valid && eventType.touched">
+            <label for="eventType">Select an event type</label>
+            <select [formControl]="createEventForm.controls['eventType']" [class.form-control-warning]="!eventType.valid && eventType.touched" [class.form-control-success]="eventType.valid" class="form-control" id="eventType">
+              <option value="" disabled selected>Event types</option>
+              <option>Concert</option>
+              <option>Party</option>
+              <option>Conference</option>
+              <option>Wedding</option>
+              <option>Other</option>
+            </select>
+            <div [hidden]="eventType.valid || !eventType.touched"  class="form-control-feedback">An event type is required.</div>
+          </div>
+          <div class="form-group" [class.has-warning]="!host.valid && host.touched" [class.has-success]="host.valid && host.touched">
+            <label class="col-form-label" for="host">Event host</label>
+            <input [formControl]="createEventForm.controls['host']" [class.form-control-warning]="!host.valid && host.touched" [class.form-control-success]="host.valid" type="name" class="form-control" name="host" id="host" required>
+            <div [hidden]="host.valid || !host.touched"  class="form-control-feedback">An event host is required.</div>
+            <small class="form-text text-muted">This could be a person or company name.</small>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group" [class.has-warning]="!start.valid && start.touched" [class.has-success]="start.valid && start.touched">
+                <label class="col-form-label" for="start">Start time</label>
+                <input [formControl]="createEventForm.controls['start']" [class.form-control-warning]="!start.valid && start.touched" [class.form-control-success]="start.valid" (change)="updateEndTime()" type="datetime-local" class="form-control" name="start" id="start" required>
+                <div [hidden]="start.valid || !start.touched || start.hasError('invalidDate')"  class="form-control-feedback">A valid start time is required.</div>
+                <div [hidden]="!start.hasError('invalidDate') || !start.touched" class="form-control-feedback">Start time can't be in the past.</div>
+
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group" [class.has-warning]="createEventForm.hasError('endDateIsBeforeStartDate') && end.touched || !end.valid && end.touched" [class.has-success]="!createEventForm.hasError('endDateIsBeforeStartDate') && end.touched || end.valid && end.touched">
+                <label class="col-form-label" for="end">End time</label>
+                <input [formControl]="createEventForm.controls['end']" [class.form-control-warning]="createEventForm.hasError('endDateIsBeforeStartDate') || !end.valid && end.touched" [class.form-control-success]="!createEventForm.hasError('endDateIsBeforeStartDate') && end.valid" type="datetime-local" class="form-control" name="end" id="end" required>
+                <div [hidden]="end.valid || !end.touched || start.hasError('invalidDate')"  class="form-control-feedback">A valid end time is required.</div>
+                <div [hidden]="!end.hasError('invalidDate') || !end.touched" class="form-control-feedback">End time cannot be in the past.</div>
+                <div [hidden]="!createEventForm.hasError('endDateIsBeforeStartDate') || !end.touched" class="form-control-feedback">End time must be greater than start time.</div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" [class.has-warning]="!location.valid && location.touched" [class.has-success]="location.valid && location.touched">
+            <label class="col-form-label" for="location">Location</label>
+            <input [formControl]="createEventForm.controls['location']" [class.form-control-warning]="!location.valid && location.touched" [class.form-control-success]="location.valid" class="form-control" id="location" placeholder="Enter an address" (focus)="geolocate()" (blur)="updateLocationValue()" type="text" required>
+            <div [hidden]="location.valid || !location.touched" class="form-control-feedback">A location is required.</div>
+          </div>
+          <div class="form-group" [class.has-warning]="!guests.value.length && guestsTouched" [class.has-success]="guests.value.length && guestsTouched">
+            <label class="col-form-label" for="guests">Guest list</label>
+            <tag-input (onBlur)="checkGuestList($event)" [formControl]="createEventForm.controls['guests']" [(ngModel)]='guests.value' placeholder="Add a guest" secondaryPlaceholder="Hit enter to add name" class="form-control" id="guests" required></tag-input>
+            <div [hidden]="guests.value.length || !guestsTouched"  class="form-control-feedback">Guests are required to create events.</div>
+            <small class="form-text text-muted">To add multiple guests, type a name and hit the enter key.</small>
+          </div>
+          <div class="form-group">
+            <label for="message">Message <small class="text-muted">(optional)</small></label>
+            <textarea [formControl]="createEventForm.controls['message']" name="message" class="form-control" id="message" rows="3"></textarea>
+            <small class="form-text text-muted">Would you like to give more information to your guests?</small>
+          </div>
+          <button type="button" (click)="onSubmit()" [disabled]="(!createEventForm.valid || !guests.value.length)" class="btn btn-primary btn-lg btn-block">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

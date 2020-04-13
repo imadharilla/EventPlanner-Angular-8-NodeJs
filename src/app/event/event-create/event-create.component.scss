@@ -1,0 +1,28 @@
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+input[type="file"]{
+  visibility: hidden;
+}
+
+
+.image-preview {
+  height: 100px;
+  margin: 10px 0;
+}
+
+.image-preview img {
+  height: 100%;
+}
+
+mat-spinner {
+  margin: 20px auto;
+}
