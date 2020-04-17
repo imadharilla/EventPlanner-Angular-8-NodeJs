@@ -29,8 +29,9 @@ export class AttendeeService {
         })
       });
       this.attendeeListUpdated.next([...this.attendeeList]);
-    });
+    })
     return [...this.attendeeList] ;
+
   }
 
   addAttendee(attendee) {

@@ -4,6 +4,8 @@ import {MyEvent} from '../event.model';
 import { Subscription, Subject } from 'rxjs';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-event-list',
@@ -13,11 +15,13 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class EventListComponent implements OnInit {
 
   events: MyEvent[]  = [];
+  upcommingEvent: MyEvent[] = [];
+  pastEvent: MyEvent[] = [];
   isLoading = false;
   totalPosts = 0;
-  postsPerPage = 2;
+  postsPerPage = 5;
   currentPage = 0;
-  pageSizeOptions = [1, 2, 3, 5];
+  pageSizeOptions = [5, 10, 15, 20];
   isAuthenticated : boolean = false;
   private authSubsLinstener : Subscription;
   private eventsSub : Subscription;
@@ -37,6 +41,7 @@ export class EventListComponent implements OnInit {
         this.isLoading = false;
         this.totalPosts = eventData.maxEvents;
         this.events = eventData.events;
+        this.getUpcommingEvent();
     } );
 
     this.isAuthenticated = this.authService.getIsAuth();
@@ -66,6 +71,23 @@ export class EventListComponent implements OnInit {
     });
   }
 
+
+  getUpcommingEvent(){
+    this.upcommingEvent = [];
+    this.pastEvent = [];
+    this.events.map(event=>{
+      let dateNow = new Date();
+      let eventDate = new Date(event.startDate);
+      let dateNowStr = dateNow.getFullYear().toString() + dateNow.getMonth().toString() + dateNow.getDate().toString();
+      let eventDateStr = eventDate.getFullYear().toString() + eventDate.getMonth().toString() + eventDate.getDate().toString();
+
+      if (dateNowStr <= eventDateStr) {
+        this.upcommingEvent.push(event);
+      }else {
+        this.pastEvent.push(event)
+      }
+    })
+  }
 
   ngOnDestroy() {
     this.eventsSub.unsubscribe();

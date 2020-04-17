@@ -33,6 +33,7 @@ export class EventsService {
           startDate : event.startDate,
           endDate : event.endDate,
           location : event.location,
+          attendeelist : event.attendeeList,
         };
       })
       , maxEvents : eventData.maxEvents
@@ -61,14 +62,13 @@ export class EventsService {
     postData.append("jsonEvent", jsonEvent );
     this.http.post<{message : string, eventId: string, url:string}>(BACKEND_URL, postData)
       .subscribe((responseData) => {
-        console.log(responseData);
         this.router.navigate(['/']);
       });
 
   }
 
    getEvent(id: string){
-     return this.http.get<{_id:string, title:string, imagePath:string ,description: string, startDate:Date, endDate:Date, location:string}>(BACKEND_URL+id);
+     return this.http.get<{_id:string, title:string, imagePath:string ,description: string, startDate:Date, endDate:Date, location:string, attendeeList:any}>(BACKEND_URL+id);
    }
 
 

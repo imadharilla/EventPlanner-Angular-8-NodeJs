@@ -37,7 +37,7 @@
   <mat-datepicker #picker2></mat-datepicker>
 </mat-form-field>
 <mat-form-field class="example-full-width">
-  <mat-label>Location</mat-label>
+  <mat-label  >Location</mat-label>
   <input matInput  formControlName="location"  >
 </mat-form-field>
 <button mat-button matStepperNext color="primary" type="button">Next</button>
@@ -49,16 +49,39 @@
 
   <form class="example-form" [formGroup]='form2' (submit)="onSaveEvent()" >
   <ng-template matStepLabel > Add participants </ng-template>
-  <mat-selection-list #shoes>
-    <mat-list-option *ngFor="let attendee of attendeeList">
-      {{attendee.nom}} {{attendee.prenom}} ( {{attendee.email}} )
-    </mat-list-option>
-  </mat-selection-list>
+
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Occupation</th>
+        <th scope="col">Invitation</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let attendee of attendeeList; index as i">
+        <td>
+          {{ attendee.nom }} {{attendee.prenom}}
+        </td>
+        <td>{{ attendee.email  }}</td>
+        <td>{{ attendee.occupation }}</td>
+        <td>
+          <input class="tgl tgl-flip" [id]="attendee.id" type="checkbox" (change)="onChecked(attendee.id, $event.target.checked)" *ngIf="isChecked(attendee.id)" checked />
+          <input class="tgl tgl-flip" [id]="attendee.id" type="checkbox" (change)="onChecked(attendee.id, $event.target.checked)" *ngIf="!isChecked(attendee.id)"  />
+
+          <label  class="tgl-btn" data-tg-off="Nope" data-tg-on="Invited!" [for]="attendee.id"></label>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
   <button mat-button matStepperPrevious color="primary" type="button">Back</button>
+
   <button mat-raised-button color="accent" type="submit">Save Event</button>
 
   </form>
 </mat-step>
 </mat-horizontal-stepper>
 </mat-card>
-

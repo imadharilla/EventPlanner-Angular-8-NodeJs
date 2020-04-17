@@ -1,23 +1,52 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" *ngIf="events.length>0 && !isLoading && isAuthenticated">
-  <mat-expansion-panel *ngFor="let event of events" >
-    <mat-expansion-panel-header>
-        {{event.title}}
-    </mat-expansion-panel-header>
-    <div class="event-image">
-      <img [src]="event.imageUrl" >
+
+<mat-tab-group  *ngIf="!isLoading"  >
+
+
+  <mat-tab label="Upcomming Events">
+<div class="row row-cols-1 row-cols-md-3" style="position: relative;" *ngIf="events.length>0 && isAuthenticated">
+
+  <div class="col mb-4" *ngFor="let event of upcommingEvent" >
+    <div class="card"  >
+      <h1 class="date"> <span class="badge" style="color: white;"> {{ event.startDate | date:'mediumDate' }}    </span> </h1>
+      <img [src]="event.imageUrl" class="card-img-top " style="height: 200px;">
+      <div class="card-body">
+        <h2 class="card-title">{{event.title}} <span>({{event.location}})</span> </h2> <h3></h3>
+        <p class="card-text">{{event.description}}  </p>
+        <button mat-button color="primary" [routerLink] ="['/edit', event.id]" >EDIT</button>
+        <button mat-button color="warn" (click)="onDelete(event.id)">DELETE</button>
+      </div>
+
     </div>
-    <p>{{event.description}}</p>
-    <p> {{event.startDate.toString().substring(0,10)}}</p>
-    <p> {{event.endDate.toString().substring(0,10)}} </p>
-    <p> {{ event.location }} </p>
+  </div>
+</div>
+<mat-paginator [pageSizeOptions]="pageSizeOptions" *ngIf="events.length>0 && isAuthenticated && !isLoading" [length]= "totalPosts" [pageSize]="postsPerPage" (page)="onChangedPage($event)"></mat-paginator>
 
-    <mat-action-row *ngIf="isAuthenticated">
-      <button mat-button color="primary" [routerLink] ="['/edit', event.id]" >EDIT</button>
-      <button mat-button color="warn" (click)="onDelete(event.id)">DELETE</button>
-    </mat-action-row>
-  </mat-expansion-panel>
-</mat-accordion>
-<mat-paginator [pageSizeOptions]="pageSizeOptions" *ngIf="events.length>0 && isAuthenticated" [length]= "totalPosts" [pageSize]="postsPerPage" (page)="onChangedPage($event)"></mat-paginator>
+</mat-tab>
+<mat-tab label="Past Events">
+  <div class="row row-cols-1 row-cols-md-3" style="position: relative;" *ngIf="events.length>0 && !isLoading && isAuthenticated">
 
-<p  *ngIf="events.length <=0 && !isLoading"> No Events Created Yet</p>
+    <div class="col mb-4" *ngFor="let event of pastEvent" >
+      <div class="card"  >
+        <h1 class="date"> <span class="badge" style="color: white;"> {{ event.startDate | date:'mediumDate' }}    </span> </h1>
+        <img [src]="event.imageUrl" class="card-img-top " style="height: 200px;">
+        <div class="card-body">
+          <h2 class="card-title">{{event.title}} <span>({{event.location}})</span> </h2> <h3></h3>
+          <p class="card-text">{{event.description}}  </p>
+          <button mat-button color="primary" [routerLink] ="['/edit', event.id]" >EDIT</button>
+          <button mat-button color="warn" (click)="onDelete(event.id)">DELETE</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <mat-paginator [pageSizeOptions]="pageSizeOptions" *ngIf="events.length>0 && isAuthenticated && !isLoading" [length]= "totalPosts" [pageSize]="postsPerPage" (page)="onChangedPage($event)"></mat-paginator>
+
+</mat-tab>
+
+
+
+
+</mat-tab-group>
+
+

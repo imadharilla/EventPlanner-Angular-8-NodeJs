@@ -6,16 +6,15 @@
 
 .event-image {
   width: 100%;
-
 }
 
 .event-image img {
 
-  box-shadow: 1px 1px 5px blue;
-  height: 300px;
-  width: 300px;
+  height: 100%;
+  width: 140px;
 
 }
+
 
 mat-paginator {
   margin-top: 16px;
@@ -24,3 +23,10 @@ mat-paginator {
 mat-spinner{
   margin: auto;
 }
+
+.date {
+  position: absolute;
+  background-color: lightskyblue;
+}
+
+

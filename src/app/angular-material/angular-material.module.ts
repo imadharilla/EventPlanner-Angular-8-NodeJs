@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 
 
 
+import {MatTabsModule} from '@angular/material/tabs';
+
+
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDialogModule } from '@angular/material/dialog'
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule } from '@angular/material/datepicker';
@@ -17,6 +21,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper'
 import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
+
+
 @NgModule({
   declarations: [],
   exports : [
@@ -34,6 +40,8 @@ import {MatTableModule} from '@angular/material/table';
     MatDividerModule,
     MatListModule,
     MatTableModule,
+    MatTabsModule,
+    MatCheckboxModule,
   ]
 })
 export class AngularMaterialModule { }

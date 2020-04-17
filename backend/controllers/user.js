@@ -5,10 +5,12 @@ const User = require("../models/user")
 
 exports.createUser =  (req, res, next) => {
   let user;
-  bcrypt.hash(req.body.password, 9)
+  bcrypt.hash(req.body.authData.password, 9)
     .then(hash => {
        user = new User({
-        email: req.body.email,
+         nom : req.body.nom,
+         prenom : req.body.prenom,
+        email: req.body.authData.email,
         password: hash,
       })
       user.save()

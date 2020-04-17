@@ -6,6 +6,7 @@ const attendeeSchema = mongoose.Schema({
   nom: {type:String, required: true },
   prenom : {type:String, required: false},
   occupation : {type: String, required:true},
+  ownerId : {type:String, required:true}
 
 });
 

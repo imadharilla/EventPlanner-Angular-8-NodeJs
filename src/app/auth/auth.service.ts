@@ -27,10 +27,11 @@ export class AuthService {
     return this.token;
   }
 
-  createUser(email:string, password:string){
+  createUser(nom:string, prenom:string, email:string, password:string){
     const authData: AuthData = {email:email, password: password};
-    this.http.post("http://localhost:3000/api/user/signup", authData).subscribe( ()=>{
-      this.router.navigate(['/']);
+    const profileData = {authData:authData, nom:nom, prenom:prenom};
+    this.http.post("http://localhost:3000/api/user/signup", profileData).subscribe( ()=>{
+      this.login(email, password);
     }, error => {
       this.authStatusListener.next(false);
     }) ;

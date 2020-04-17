@@ -17,10 +17,12 @@ exports.createEvent = (req, res, next) => {
       endDate : eventJs.endDate,
       location : eventJs.location,
       creator: req.userData.userId,
+      attendeeList : eventJs.attendeelist,
     }
   );
   try {
     event.save().then((result)=>{
+      console.log(result);
       res.status(201).json({
         message : "Post Added Successfully",
         eventId: result._id,
@@ -49,6 +51,7 @@ exports.updateEvent = (req, res, next) => {
       endDate : eventData.endDate,
       location : eventData.location,
       creator: req.userData.userId,
+      attendeeList : eventData.attendeelist,
     })
   }else{
     event = new Event({
@@ -60,13 +63,13 @@ exports.updateEvent = (req, res, next) => {
       endDate : req.body.endDate,
       location : req.body.location,
       creator: req.userData.userId,
+      attendeeList : req.body.attendeelist,
 
     })
   }
-
+  console.log(event);
   Event.updateOne({_id: req.params.id}, event)
   .then((result) => {
-
       res.status(200).json({message: "update Successful", imagePath: event.imagePath});
 
     });
